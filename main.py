@@ -51,6 +51,12 @@ def analyze(team1, team2):
         "analysis": f"{team1} form: {f1:.2f}, {team2} form: {f2:.2f}"
     }
 
+# ✅ HOME ROUTE (fixes 404)
+@app.get("/")
+def home():
+    return {"message": "Bet AI Backend Running 🚀"}
+
+# ✅ TODAY MATCHES
 @app.get("/today")
 def today():
     matches = [
@@ -61,3 +67,23 @@ def today():
     ]
 
     return [analyze(t1,t2) for t1,t2 in matches]
+
+# ✅ LIVE MATCHES (basic for now)
+@app.get("/live")
+def live():
+    matches = [
+        ("Arsenal","Chelsea"),
+        ("Barcelona","Madrid"),
+    ]
+
+    results = []
+
+    for t1, t2 in matches:
+        results.append({
+            "team1": t1,
+            "team2": t2,
+            "status": "LIVE",
+            "score": f"{random.randint(0,3)} - {random.randint(0,3)}"
+        })
+
+    return results
